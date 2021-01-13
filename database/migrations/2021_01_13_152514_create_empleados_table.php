@@ -20,7 +20,7 @@ class CreateEmpleadosTable extends Migration
             $table->string('dni',10);
             $table->string('direccion',100);
             $table->string('ciudad',40);
-            $table->string('cargo',40);
+            $table->string('cargo',100);
             $table->boolean('erte');
             $table->timestamps();
         });

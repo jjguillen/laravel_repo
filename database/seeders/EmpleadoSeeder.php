@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Faker;
 use Carbon\Carbon;
+use App\Models\Empleado;
 
 class EmpleadoSeeder extends Seeder
 {
@@ -17,6 +18,7 @@ class EmpleadoSeeder extends Seeder
      */
     public function run()
     {
+        /*
         //Creamos 20 empleados
         $faker = Faker\Factory::create();
         for($i=0; $i<20; $i++) {
@@ -33,5 +35,11 @@ class EmpleadoSeeder extends Seeder
             ]);
 
         }
+        */
+
+        Empleado::factory()
+            ->count(15)
+            ->create();
+
     }
 }
