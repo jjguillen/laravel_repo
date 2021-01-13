@@ -19,6 +19,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('incidencias', IncidenciaController::class);
+Route::resource('/incidencias', IncidenciaController::class);
 
-Route::get('empleados',[EmpleadoController::class, 'index']);
+Route::resource('/empleados', EmpleadoController::class);
