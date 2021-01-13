@@ -6,6 +6,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Faker;
+use Carbon\Carbon;
 
 class EmpleadoSeeder extends Seeder
 {
@@ -26,7 +27,9 @@ class EmpleadoSeeder extends Seeder
                 'direccion' => $faker->streetAddress,
                 'ciudad' => $faker->city,
                 'cargo' => $faker->jobTitle,
-                'erte' => $faker->boolean
+                'erte' => $faker->boolean,
+                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
             ]);
 
         }
