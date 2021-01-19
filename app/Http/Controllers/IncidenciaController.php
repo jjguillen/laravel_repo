@@ -25,7 +25,7 @@ class IncidenciaController extends Controller
      */
     public function create()
     {
-        //
+        return view('incidencia.nuevo');
     }
 
     /**
@@ -36,7 +36,33 @@ class IncidenciaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        /*
+        echo "<h1>Store</h1>";
+        echo $request->path()."<br>";
+        echo $request->url()."<br>";
+        echo $request->ip()."<br>";
+
+        if ($request->has(['latitud', 'longitud','estado'])) {
+            echo ($request->input('latitud'));
+            echo ($request->input('longitud'));
+            echo $request->estado;
+        }
+        */
+
+        $incidencia = new Incidencia;
+        $incidencia->latitud = $request->latitud;
+        $incidencia->longitud = $request->longitud;
+        $incidencia->ciudad = $request->ciudad;
+        $incidencia->direccion = $request->direccion;
+        $incidencia->etiqueta = $request->etiqueta;
+        $incidencia->descripcion = $request->descripcion;
+        $incidencia->estado = $request->estado;
+        $incidencia->save();
+
+        //Subir un archivo y grabarlo en nuestro disco. Carpeta storage
+        $path = $request->foto->storeAs('images','incidencia'.$incidencia->id.'.png');
+        
+ 
     }
 
     /**
@@ -47,7 +73,9 @@ class IncidenciaController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('incidencia.profile', [
+            'incidencia' => Incidencia::findOrFail($id)
+        ]);
     }
 
     /**

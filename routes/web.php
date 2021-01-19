@@ -19,6 +19,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/incidencia/{id}', [IncidenciaController::class, 'show'] );
 Route::resource('/incidencias', IncidenciaController::class);
 
 Route::resource('/empleados', EmpleadoController::class);
