@@ -73,9 +73,23 @@ class IncidenciaController extends Controller
      */
     public function show($id)
     {
+        
+        
         return view('incidencia.profile', [
             'incidencia' => Incidencia::findOrFail($id)
         ]);
+        
+        
+        /*
+        //Devuelve el modelo, o sea, la incidencia en JSON 
+        $incidencia = Incidencia::findOrFail($id);
+        return $incidencia;
+        */
+        
+        /*
+        return response($incidencia)
+            ->header('Content-Type', 'application/json');
+        */
     }
 
     /**
