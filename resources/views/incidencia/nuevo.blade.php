@@ -1,3 +1,4 @@
+<h3>{{ $mensaje }}</h3>
 <form method="POST" action="/incidencias" enctype="multipart/form-data">
     @csrf
 

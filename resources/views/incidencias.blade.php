@@ -1,6 +1,10 @@
-@foreach ($incidencias as $incidencia)
-    <p>
-    Incidencia {{ $incidencia->id }} {{ $incidencia->latitud }}
-    {{ $incidencia->longitud }} {{ $incidencia->ciudad }}
-    </p>
-@endforeach
+@extends('layouts.app')
+
+@section('title', 'Incidencias')
+
+@section('content')
+    @each('incidencia.show', $incidencias, 'incidencia')    
+@endsection
+
+
+

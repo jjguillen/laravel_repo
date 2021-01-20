@@ -25,7 +25,7 @@ class IncidenciaController extends Controller
      */
     public function create()
     {
-        return view('incidencia.nuevo');
+        return view('incidencia.nuevo')->with('mensaje','Nueva incidencia');
     }
 
     /**
@@ -62,7 +62,10 @@ class IncidenciaController extends Controller
         //Subir un archivo y grabarlo en nuestro disco. Carpeta storage
         $path = $request->foto->storeAs('images','incidencia'.$incidencia->id.'.png');
         
- 
+        //Creamos una cookie en el cliente
+        return response('Incidencia')->cookie(
+            'incidencia', 'hola mundo', 3
+        );
     }
 
     /**
