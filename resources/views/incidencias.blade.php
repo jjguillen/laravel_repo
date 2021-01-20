@@ -1,9 +1,7 @@
 @extends('layouts.app')
 
-@section('title')
-    @parent
-    <h3>Incidencias</h3>
-@endsection
+@section('title', 'Incidencias')
+@section('active1', ' active')
 
 @section('content')
     <table>
