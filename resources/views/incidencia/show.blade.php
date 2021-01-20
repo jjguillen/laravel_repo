@@ -1,6 +1,8 @@
 
-<section>
-    <p>{{ $incidencia->latitud }} {{ $incidencia->longitud }}</p>
-    <p>{{ $incidencia->descripcion }}</p>
-    <p>{{ $incidencia->ciudad }} {{ $incidencia->direccion }}</p>
-</section>
+<tr>
+    <td>{{ $incidencia->latitud }}</td>
+    <td>{{ $incidencia->longitud }}</td>
+    <td>{{ $incidencia->ciudad }}</td>
+    <td>{{ $incidencia->direccion }}</td>
+    <td>{{ $incidencia->estado }}</td>
+</tr>
