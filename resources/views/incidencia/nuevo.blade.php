@@ -1,31 +1,63 @@
-<h3>{{ $mensaje }}</h3>
+@extends('layouts.app')
+
+@section('title', $mensaje)
+@section('active2', ' active')
+
+@section('content')
+
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
 <form method="POST" action="/incidencias" enctype="multipart/form-data">
     @csrf
+    <div class="form-group">
+        <label for="latitud">Latitud</label>
+        <input class="form-control" name="latitud" id="latitud" type="text" value="{{ old('latitud') }}">
+    </div>
 
-    <label for="latitud">Latitud</label>
-    <input name="latitud" id="latitud" type="text">
+    <div class="form-group">
+        <label for="longitud">Longitud</label>
+        <input class="form-control" name="longitud" id="longitud" type="text" value="{{ old('longitud') }}">
+    </div>
 
-    <label for="longitud">Longitud</label>
-    <input name="longitud" id="longitud" type="text">
+    <div class="form-group">
+        <label for="ciudad">Ciudad</label>
+        <input class="form-control" name="ciudad" id="ciudad" type="text" value="{{ old('ciudad') }}">
+    </div>
+    
+    <div class="form-group">
+        <label for="direccion">Dirección</label>
+        <input class="form-control" name="direccion" id="direccion" type="text" value="{{ old('direccion') }}"> 
+    </div>
 
-    <label for="ciudad">Ciudad</label>
-    <input name="ciudad" id="ciudad" type="text">
+    <div class="form-group">
+        <label for="etiqueta">Etiqueta</label>
+        <input class="form-control" name="etiqueta" id="etiqueta" type="text" value="{{ old('etiqueta') }}">
+    </div>
 
-    <label for="direccion">Dirección</label>
-    <input name="direccion" id="direccion" type="text">
+    <div class="form-group">
+        <label for="descripcion">Descripción</label>
+        <textarea class="form-control" name="descripcion" id="descripcion" ></textarea>
+    </div>
 
-    <label for="etiqueta">Etiqueta</label>
-    <input name="etiqueta" id="etiqueta" type="text">
+    <div class="form-group">
+        <label for="estado">Estado</label>
+        <input class="form-control" name="estado" id="estado" type="text" value="{{ old('estado') }}">
+    </div>
 
-    <label for="descripcion">Descripción</label>
-    <textarea name="descripcion" id="descripcion" ></textarea>
-
-    <label for="estado">Estado</label>
-    <input name="estado" id="estado" type="text">
-
-    <label for="foto">Foto</label>
-    <input name="foto" id="foto" type="file">
-
+    <div class="form-group">
+        <label for="foto">Foto</label>
+        <input class="form-control" name="foto" id="foto" type="file">
+    </div>
 
     <input type="submit" value="Crear">
 </form>
+
+@endsection

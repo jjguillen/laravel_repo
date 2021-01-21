@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Incidencia;
+use Illuminate\Support\Facades\Log;
+use Exception;
 
 class IncidenciaController extends Controller
 {
@@ -62,15 +64,31 @@ class IncidenciaController extends Controller
         }
         */
 
-        $incidencia = new Incidencia;
-        $incidencia->latitud = $request->latitud;
-        $incidencia->longitud = $request->longitud;
-        $incidencia->ciudad = $request->ciudad;
-        $incidencia->direccion = $request->direccion;
-        $incidencia->etiqueta = $request->etiqueta;
-        $incidencia->descripcion = $request->descripcion;
-        $incidencia->estado = $request->estado;
-        $incidencia->save();
+        //Validación de los datos del formulario
+        $validated = $request->validate([
+            'latitud' => 'required|numeric|digits_between:0,360',
+            'longitud' => 'required|numeric|digits_between:0,360',
+            'estado' => 'required',
+            'foto' => 'required|file|image|mimes:jpg,png',
+        ]);
+
+        try {
+            //Insertar en BD a través de ELOQUENT
+            $incidencia = new Incidencia;
+            $incidencia->latitud = $request->latitud;
+            $incidencia->longitud = $request->longitud;
+            $incidencia->ciudad = $request->ciudad;
+            $incidencia->direccion = $request->direccion;
+            $incidencia->etiqueta = $request->etiqueta;
+            $incidencia->descripcion = $request->descripcion;
+            $incidencia->estado = $request->estado;
+            $incidencia->save();
+        } catch (Exception $e) {
+            Log::error("Error en BD insertando incidencia ".$e->getMessage());
+            return "ERROR";
+        }
+
+        Log::info("Insertada incidencia");
 
         //Subir un archivo y grabarlo en nuestro disco. Carpeta storage
         $path = $request->foto->storeAs('images','incidencia'.$incidencia->id.'.png');
