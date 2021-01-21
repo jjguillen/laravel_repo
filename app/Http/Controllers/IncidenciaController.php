@@ -14,8 +14,21 @@ class IncidenciaController extends Controller
      */
     public function index()
     {
+        //Sacamos todas las incidencias
         $incidencias = Incidencia::all();
-        return view('incidencias', ['incidencias' => $incidencias]);
+
+        //Sesión para llevar contador de visitas de la url /incidencias
+        if (session()->has('visitasIncidencia')) {
+            $cont = session('visitasIncidencia', 'default');
+            $cont++;
+            session(['visitasIncidencia' => $cont]);
+        } else {
+            session(['visitasIncidencia' => 0]);
+        }
+        
+        //Pintamos la vista incidencias con las incidencias y el contador
+        return view('incidencias', [ 'incidencias' => $incidencias, 
+                                     'contador' => session('visitasIncidencia') ]);
     }
 
     /**

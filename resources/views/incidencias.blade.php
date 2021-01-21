@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('title', 'Incidencias')
-@section('active1', ' active')
-
+@section('active1', 'active')
+@section('contador', $contador)
 @section('content')
     <table>
         <tr>
