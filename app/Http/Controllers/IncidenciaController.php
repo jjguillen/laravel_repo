@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Incidencia;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 use Exception;
 
 class IncidenciaController extends Controller
@@ -17,7 +18,9 @@ class IncidenciaController extends Controller
     public function index()
     {
         //Sacamos todas las incidencias
-        $incidencias = Incidencia::all();
+        //$incidencias = Incidencia::all(); //Eloquent
+        $incidencias = DB::table('incidencias')->get(); //Query Builder
+
 
         //Sesión para llevar contador de visitas de la url /incidencias
         if (session()->has('visitasIncidencia')) {
@@ -51,28 +54,16 @@ class IncidenciaController extends Controller
      */
     public function store(Request $request)
     {
-        /*
-        echo "<h1>Store</h1>";
-        echo $request->path()."<br>";
-        echo $request->url()."<br>";
-        echo $request->ip()."<br>";
-
-        if ($request->has(['latitud', 'longitud','estado'])) {
-            echo ($request->input('latitud'));
-            echo ($request->input('longitud'));
-            echo $request->estado;
-        }
-        */
-
         //Validación de los datos del formulario
         $validated = $request->validate([
-            'latitud' => 'required|numeric|digits_between:0,360',
-            'longitud' => 'required|numeric|digits_between:0,360',
+            'latitud' => 'required|numeric',
+            'longitud' => 'required|numeric',
             'estado' => 'required',
             'foto' => 'required|file|image|mimes:jpg,png',
         ]);
 
         try {
+            /*
             //Insertar en BD a través de ELOQUENT
             $incidencia = new Incidencia;
             $incidencia->latitud = $request->latitud;
@@ -82,7 +73,20 @@ class IncidenciaController extends Controller
             $incidencia->etiqueta = $request->etiqueta;
             $incidencia->descripcion = $request->descripcion;
             $incidencia->estado = $request->estado;
-            $incidencia->save();
+            $incidencia->save(); //Eloquent
+            */
+
+            //Insertar con Query Builder
+            $id = DB::table('incidencias')->insertGetId([
+                'latitud' => $request->latitud,
+                'longitud' => $request->longitud,
+                'ciudad' => $request->ciudad,
+                'direccion' => $request->direccion,
+                'etiqueta' => $request->etiqueta,
+                'descripcion' => $request->descripcion,
+                'estado' => $request->estado,
+            ]);
+
         } catch (Exception $e) {
             Log::error("Error en BD insertando incidencia ".$e->getMessage());
             return "ERROR";
@@ -91,8 +95,9 @@ class IncidenciaController extends Controller
         Log::info("Insertada incidencia");
 
         //Subir un archivo y grabarlo en nuestro disco. Carpeta storage
-        $path = $request->foto->storeAs('images','incidencia'.$incidencia->id.'.png');
-        
+        //$path = $request->foto->storeAs('images','incidencia'.$incidencia->id.'.png');
+        $path = $request->foto->storeAs('images','incidencia'.$id.'.png');
+
         //Creamos una cookie en el cliente
         return response('Incidencia')->cookie(
             'incidencia', 'hola mundo', 3
@@ -107,10 +112,12 @@ class IncidenciaController extends Controller
      */
     public function show($id)
     {
-        
+        //$incidencia = Incidencia::findOrFail($id); //Eloquent
+        //$incidencia = DB::table('incidencias')->where('id', $id)->first(); //Query Builder
+        $incidencia = DB::table('incidencias')->find($id);
         
         return view('incidencia.profile', [
-            'incidencia' => Incidencia::findOrFail($id)
+            'incidencia' => $incidencia
         ]);
         
         
@@ -134,7 +141,9 @@ class IncidenciaController extends Controller
      */
     public function edit($id)
     {
-        //
+        $incidencia = DB::table('incidencias')->find($id);
+        return view('incidencia.editar')->with('mensaje','Modificar incidencia')
+                                        ->with('incidencia',$incidencia);
     }
 
     /**
@@ -146,7 +155,22 @@ class IncidenciaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //Query Builder
+        DB::table('incidencias')
+              ->where('id', $id)
+              ->update([
+                'latitud' => $request->latitud,
+                'longitud' => $request->longitud,
+                'ciudad' => $request->ciudad,
+                'direccion' => $request->direccion,
+                'etiqueta' => $request->etiqueta,
+                'descripcion' => $request->descripcion,
+                'estado' => $request->estado,
+                ]);
+
+        return redirect()->action(
+            [IncidenciaController::class, 'show'], ['incidencia' => $id]
+        );
     }
 
     /**
@@ -157,6 +181,7 @@ class IncidenciaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //Query Builder
+        DB::table('incidencias')->where('id', '=', $id)->delete();
     }
 }
