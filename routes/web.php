@@ -20,6 +20,7 @@ Route::get('/', function () {
 });
 
 Route::get('/incidencia/{id}', [IncidenciaController::class, 'show'] );
+Route::get('/incidencia/{id}/delete', [IncidenciaController::class, 'destroy'] );
 Route::resource('/incidencias', IncidenciaController::class);
 
 Route::resource('/empleados', EmpleadoController::class);

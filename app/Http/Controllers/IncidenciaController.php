@@ -183,5 +183,8 @@ class IncidenciaController extends Controller
     {
         //Query Builder
         DB::table('incidencias')->where('id', '=', $id)->delete();
+        return redirect()->action(
+            [IncidenciaController::class, 'index']
+        );
     }
 }
