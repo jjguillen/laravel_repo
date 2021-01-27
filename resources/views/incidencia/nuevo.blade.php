@@ -54,6 +54,11 @@
     </div>
 
     <div class="form-group">
+        <label for="nivel">Nivel</label>
+        <input class="form-control" name="nivel" id="nivel" type="text" value="{{ old('nivel') }}">
+    </div>
+
+    <div class="form-group">
         <label for="foto">Foto</label>
         <input class="form-control" name="foto" id="foto" type="file">
     </div>

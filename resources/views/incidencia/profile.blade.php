@@ -6,5 +6,6 @@
     <p>{{ $incidencia->longitud }}</p>
     <p>{{ $incidencia->direccion }}</p>
     <p>{{ $incidencia->estado }}</p>
+    <p>{{ $incidencia->nivel }}</p>
 </x-profile>
 @endsection

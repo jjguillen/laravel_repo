@@ -5,4 +5,5 @@
     <td>{{ $incidencia->ciudad }}</td>
     <td>{{ $incidencia->direccion }}</td>
     <td>{{ $incidencia->estado }}</td>
+    <td>{{ $incidencia->nivel }}</td>
 </tr>

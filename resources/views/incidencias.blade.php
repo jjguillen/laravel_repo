@@ -11,9 +11,14 @@
             <th>Ciudad</th>
             <th>Dirección</th>
             <th>Estado</th>
+            <th>Nivel</th>
         </tr>
         @each('incidencia.show', $incidencias, 'incidencia')
     </table>    
+
+    <div>{{ $incidencias->links() }}</div>
+    
+
 @endsection
 
 

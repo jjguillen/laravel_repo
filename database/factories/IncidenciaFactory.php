@@ -29,7 +29,8 @@ class IncidenciaFactory extends Factory
             'direccion' => $this->faker->streetAddress,
             'etiqueta' => Str::random(3),
             'descripcion' => $this->faker->text($maxNbChars = 200),
-            'estado' => 'abierta'
+            'estado' => 'abierta',
+            'nivel' => 1
         ];
 
     }

@@ -19,7 +19,7 @@ class IncidenciaController extends Controller
     {
         //Sacamos todas las incidencias
         //$incidencias = Incidencia::all(); //Eloquent
-        $incidencias = DB::table('incidencias')->get(); //Query Builder
+        $incidencias = DB::table('incidencias')->paginate(7); //Query Builder
 
 
         //Sesión para llevar contador de visitas de la url /incidencias
@@ -33,7 +33,7 @@ class IncidenciaController extends Controller
         
         //Pintamos la vista incidencias con las incidencias y el contador
         return view('incidencias', [ 'incidencias' => $incidencias, 
-                                     'contador' => session('visitasIncidencia') ]);
+                                     'contador' => session('visitasIncidencia')]);
     }
 
     /**
@@ -85,6 +85,7 @@ class IncidenciaController extends Controller
                 'etiqueta' => $request->etiqueta,
                 'descripcion' => $request->descripcion,
                 'estado' => $request->estado,
+                'nivel' => $request->nivel
             ]);
 
         } catch (Exception $e) {
@@ -99,8 +100,13 @@ class IncidenciaController extends Controller
         $path = $request->foto->storeAs('images','incidencia'.$id.'.png');
 
         //Creamos una cookie en el cliente
+        /*
         return response('Incidencia')->cookie(
             'incidencia', 'hola mundo', 3
+        );*/
+
+        return redirect()->action(
+            [IncidenciaController::class, 'show'], ['incidencia' => $id]
         );
     }
 
@@ -166,6 +172,7 @@ class IncidenciaController extends Controller
                 'etiqueta' => $request->etiqueta,
                 'descripcion' => $request->descripcion,
                 'estado' => $request->estado,
+                'nivel' => $request->nivel
                 ]);
 
         return redirect()->action(
