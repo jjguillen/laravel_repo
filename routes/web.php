@@ -19,8 +19,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/incidencia/{id}', [IncidenciaController::class, 'show'] );
-Route::get('/incidencia/{id}/delete', [IncidenciaController::class, 'destroy'] );
+Route::get('/incidencias/{id}/delete', [IncidenciaController::class, 'destroy'] );
 Route::resource('/incidencias', IncidenciaController::class);
 
+Route::get('/empleados/{empleado}/delete', [EmpleadoController::class, 'destroy'] );
 Route::resource('/empleados', EmpleadoController::class);

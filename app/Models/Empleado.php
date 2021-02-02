@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Incidencia;
 
 class Empleado extends Model
 {
@@ -11,7 +12,11 @@ class Empleado extends Model
 
     protected $table = 'empleados';
 
-    
+    public function incidencias() {
+        return $this->hasMany(Incidencia::class);
+    }
+
+
 }
 
 

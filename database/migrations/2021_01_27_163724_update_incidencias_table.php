@@ -15,6 +15,8 @@ class UpdateIncidenciasTable extends Migration
     {
         Schema::table('incidencias', function (Blueprint $table) {
             $table->integer('nivel');
+            $table->unsignedInteger('empleado_id')->nullable();
+            $table->foreign('empleado_id')->references('id')->on('empleados')->onDelete('cascade');
         });
     }
 

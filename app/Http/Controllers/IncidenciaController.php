@@ -18,8 +18,8 @@ class IncidenciaController extends Controller
     public function index()
     {
         //Sacamos todas las incidencias
-        //$incidencias = Incidencia::all(); //Eloquent
-        $incidencias = DB::table('incidencias')->paginate(7); //Query Builder
+        $incidencias = Incidencia::paginate(7); //Eloquent
+        //$incidencias = DB::table('incidencias')->paginate(7); //Query Builder
 
 
         //Sesión para llevar contador de visitas de la url /incidencias

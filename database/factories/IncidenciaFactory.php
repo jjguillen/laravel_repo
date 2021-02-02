@@ -30,8 +30,9 @@ class IncidenciaFactory extends Factory
             'etiqueta' => Str::random(3),
             'descripcion' => $this->faker->text($maxNbChars = 200),
             'estado' => 'abierta',
-            'nivel' => 1
-        ];
+            'nivel' => 1,
+            'empleado_id' => 1
+         ];
 
     }
 }

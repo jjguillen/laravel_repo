@@ -15,7 +15,7 @@ class EmpleadoController extends Controller
     public function index()
     {
         //$empleados = Empleado::all();
-        $empleados = Empleado::where('erte',false)->orderBy('nombre')->get();
+        $empleados = Empleado::where('erte',false)->orderBy('nombre')->paginate(7);
         return view('empleados', ['empleados' => $empleados ]);
     }
 
@@ -26,7 +26,7 @@ class EmpleadoController extends Controller
      */
     public function create()
     {
-        //
+        return view('empleado.nuevo')->with('mensaje','Nuevo empleado');
     }
 
     /**
@@ -37,7 +37,20 @@ class EmpleadoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $empleado = new Empleado;
+        $empleado->nombre = $request->nombre;
+        $empleado->apellidos = $request->apellidos;
+        $empleado->dni = $request->dni;
+        $empleado->direccion = $request->direccion;
+        $empleado->ciudad = $request->ciudad;
+        $empleado->cargo = $request->cargo;
+        $empleado->erte = $request->erte;
+        $empleado->save();
+
+        return redirect()->action(
+            [EmpleadoController::class, 'index']
+        );
+
     }
 
     /**
@@ -61,7 +74,8 @@ class EmpleadoController extends Controller
      */
     public function edit(Empleado $empleado)
     {
-        //
+        return view('empleado.editar')->with('mensaje','Modificar empleado')
+                                      ->with('empleado',$empleado);
     }
 
     /**
@@ -73,7 +87,18 @@ class EmpleadoController extends Controller
      */
     public function update(Request $request, Empleado $empleado)
     {
-        //
+        $empleado->nombre = $request->nombre;
+        $empleado->apellidos = $request->apellidos;
+        $empleado->dni = $request->dni;
+        $empleado->direccion = $request->direccion;
+        $empleado->ciudad = $request->ciudad;
+        $empleado->cargo = $request->cargo;
+        $empleado->erte = $request->erte;
+        $empleado->save();
+
+        return redirect()->action(
+            [EmpleadoController::class, 'index']
+        );
     }
 
     /**
@@ -85,5 +110,9 @@ class EmpleadoController extends Controller
     public function destroy(Empleado $empleado)
     {
         $empleado->delete();
+
+        return redirect()->action(
+            [EmpleadoController::class, 'index']
+        );
     }
 }
