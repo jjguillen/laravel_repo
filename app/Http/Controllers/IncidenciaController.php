@@ -118,9 +118,9 @@ class IncidenciaController extends Controller
      */
     public function show($id)
     {
-        //$incidencia = Incidencia::findOrFail($id); //Eloquent
+        $incidencia = Incidencia::findOrFail($id); //Eloquent
         //$incidencia = DB::table('incidencias')->where('id', $id)->first(); //Query Builder
-        $incidencia = DB::table('incidencias')->find($id);
+        //$incidencia = DB::table('incidencias')->find($id);
         
         return view('incidencia.profile', [
             'incidencia' => $incidencia

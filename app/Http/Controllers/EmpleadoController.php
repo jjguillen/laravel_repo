@@ -126,4 +126,21 @@ class EmpleadoController extends Controller
 
 
     }
+
+    public function asignarEmpleados($incidencia) {
+        $empleados = Empleado::all();
+        return view('empleados_asig', ['empleados' => $empleados,
+                                       'incidencia' => $incidencia ]);
+    }
+
+    public function asignarEmpleadosIncidencia($empleado, $incidencia) {
+        $empleado = Empleado::find($empleado);
+        $incidencia = Incidencia::find($incidencia);
+        $empleado->incidencias_abiertas()->save($incidencia); //Cambia el id de la relación (update)
+
+        return view('incidencia.profile', [
+            'incidencia' => $incidencia
+        ]);
+
+    }
 }

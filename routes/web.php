@@ -23,6 +23,8 @@ Route::get('/', function () {
 Route::get('/incidencias/{id}/delete', [IncidenciaController::class, 'destroy'] );
 Route::resource('/incidencias', IncidenciaController::class);
 
+Route::get('/empleados/{empleado}/asignar/{incidencia}', [EmpleadoController::class, 'asignarEmpleadosIncidencia']);
+Route::get('/empleados/asignar/{incidencia}', [EmpleadoController::class, 'asignarEmpleados'] );
 Route::get('/empleados/{empleado}/cerradas', [EmpleadoController::class, 'incidenciasCerradas'] );
 Route::get('/empleados/{empleado}/delete', [EmpleadoController::class, 'destroy'] );
 Route::resource('/empleados', EmpleadoController::class);
