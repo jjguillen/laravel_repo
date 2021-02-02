@@ -15,4 +15,5 @@ class Incidencia extends Model
     public function empleado() {
         return $this->belongsTo(Empleado::class);
     }
+
 }

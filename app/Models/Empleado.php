@@ -12,10 +12,13 @@ class Empleado extends Model
 
     protected $table = 'empleados';
 
-    public function incidencias() {
-        return $this->hasMany(Incidencia::class);
+    public function incidencias_cerradas() {
+        return $this->hasMany(Incidencia::class)->where('estado','cerrada');
     }
 
+    public function incidencias_abiertas() {
+        return $this->hasMany(Incidencia::class)->where('estado','abierta');
+    }
 
 }
 

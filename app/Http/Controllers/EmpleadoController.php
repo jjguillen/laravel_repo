@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Empleado;
 use Illuminate\Http\Request;
+use App\Models\Incidencia;
 
 class EmpleadoController extends Controller
 {
@@ -114,5 +115,15 @@ class EmpleadoController extends Controller
         return redirect()->action(
             [EmpleadoController::class, 'index']
         );
+    }
+
+    public function incidenciasCerradas(Empleado $empleado) {
+        //Ojo que si queremos seguir encadenando métodos hay que poner los paréntesis
+        //Sino, hay que quitarlos
+        $incidencias = $empleado->incidencias_cerradas()->paginate(7);
+
+        return view('incidencias', [ 'incidencias' => $incidencias ]);
+
+
     }
 }
