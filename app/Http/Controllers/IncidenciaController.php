@@ -200,7 +200,13 @@ class IncidenciaController extends Controller
      * Mostrar asistentes que pueden resolver una incidencia
      */
     public function mostrarAsistentes($incidencia) {
-        $asistentes = Asistente::all();
+        //Saca los asistentes cuyo id no haya sido asignado ya a la incidencia
+        $asistentes = Asistente::whereNotIn('id', function($query) use($incidencia) {
+                        $query->select('asistente_id')
+                        ->from('incidencia_asistente')
+                        ->where('incidencia_id','=',$incidencia); 
+                    })->get();
+
         return view('incidencia.asistente_asig', ['asistentes' => $asistentes,
                                        'incidencia' => $incidencia ]);
     }
@@ -211,6 +217,7 @@ class IncidenciaController extends Controller
     public function asignarAsistente($incidencia, $asistente) {
         $incidencia_obj = Incidencia::find($incidencia);
 
+        /*
         $encontrado = false;
         foreach($incidencia_obj->asistentes as $asistente_obj) {
             if ($asistente_obj->id == $asistente) {
@@ -221,6 +228,9 @@ class IncidenciaController extends Controller
         if (!$encontrado) {
             $incidencia_obj->asistentes()->attach($asistente); //añadir en la tabla pivote
         }
+        */
+        //Ya solo saco los asistentes que no están
+        $incidencia_obj->asistentes()->attach($asistente); //añadir en la tabla pivote
 
         return view('incidencia.profile', [
             'incidencia' => $incidencia_obj
