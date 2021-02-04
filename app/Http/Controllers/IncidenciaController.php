@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Incidencia;
+use App\Models\Asistente;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 use Exception;
@@ -194,4 +195,39 @@ class IncidenciaController extends Controller
             [IncidenciaController::class, 'index']
         );
     }
+
+    /**
+     * Mostrar asistentes que pueden resolver una incidencia
+     */
+    public function mostrarAsistentes($incidencia) {
+        $asistentes = Asistente::all();
+        return view('incidencia.asistente_asig', ['asistentes' => $asistentes,
+                                       'incidencia' => $incidencia ]);
+    }
+
+    /**
+     * Asigna un asistente en el tratamiento de una incidencia
+     */
+    public function asignarAsistente($incidencia, $asistente) {
+        $incidencia_obj = Incidencia::find($incidencia);
+
+        $encontrado = false;
+        foreach($incidencia_obj->asistentes as $asistente_obj) {
+            if ($asistente_obj->id == $asistente) {
+                $encontrado = true;
+            }
+        }
+
+        if (!$encontrado) {
+            $incidencia_obj->asistentes()->attach($asistente); //añadir en la tabla pivote
+        }
+
+        return view('incidencia.profile', [
+            'incidencia' => $incidencia_obj
+        ]);
+
+    }
+
+
+
 }

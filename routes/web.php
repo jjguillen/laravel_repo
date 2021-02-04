@@ -20,6 +20,8 @@ Route::get('/', function () {
 });
 
 
+Route::get('/incidencias/{incidencia}/asignarasistente/{asistente}', [IncidenciaController::class, 'asignarAsistente'] );
+Route::get('/incidencias/asignarasistente/{incidencia}', [IncidenciaController::class, 'mostrarAsistentes'] );
 Route::get('/incidencias/{id}/delete', [IncidenciaController::class, 'destroy'] );
 Route::resource('/incidencias', IncidenciaController::class);
 
